@@ -25,6 +25,7 @@
 #include <keys.h>
 #include <stmp3xxx.h>
 #include <arch/platform.h>
+#include "registers/regspinctrl.h"
 
 static struct tag *params;
 static char *cmdlines[MAGIC_KEY_NR];
@@ -348,6 +349,14 @@ u32 setup_tags (void)
 	enum magic_key magic_key;
 
 	magic_key = get_magic_key();
+	/* this is only on Canby */
+	if (magic_key == NO_MAGIC_KEY) {
+		/* Read the Boot Mode to select a kernel boot line */
+		/* Boot Mode & 0x4 means the system is booting from NAND */
+		if (HW_PINCTRL_DIN1_RD() & 0x4) {
+			magic_key = MAGIC_KEY1;
+		}
+	}
 	find_command_lines();
 
 	setup_start_tag();

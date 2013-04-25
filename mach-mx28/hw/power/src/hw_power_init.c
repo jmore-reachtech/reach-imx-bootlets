@@ -158,7 +158,7 @@ void hw_power_Init4p2EnabledPowerSupply(void)
 
 	HW_POWER_DCDC4P2.B.TRG = 0;
 	HW_POWER_5VCTRL.B.HEADROOM_ADJ = 0x4;
-	HW_POWER_DCDC4P2.B.DROPOUT_CTRL = 0xA;  //100mV drop before stealing
+	HW_POWER_DCDC4P2.B.DROPOUT_CTRL = 0xC;  //200mV drop before stealing
 		// charging current
 	HW_POWER_5VCTRL.B.CHARGE_4P2_ILIMIT = 0x3f;
 }

@@ -1151,7 +1151,7 @@ RtStatus_t hw_power_PowerOn4p2Rail( void )
     // and steal from
     // battery while ramping up to full current.
     HW_POWER_DCDC4P2.B.BO = 0; // 0 * 25mW +3.6V = 3.60V
-    HW_POWER_DCDC4P2.B.TRG = 0; // 4.2V
+    HW_POWER_DCDC4P2.B.TRG = 2; // 4.0V
 
     // power up the 4p2 rail and logic/control
     hw_power_EnableMaster4p2( true );
@@ -1519,7 +1519,13 @@ void hw_power_Enable4p2DcdcInput( bool bEnable )
 			HW_POWER_5VCTRL_CLR(BM_POWER_MINPWR_PWD_BO);
 		}
 
-
+		/* set vbus valid to 4.0v */
+		HW_POWER_5VCTRL_CLR(BM_POWER_5VCTRL_VBUSVALID_TRSH);
+		HW_POWER_5VCTRL_SET(BF_POWER_5VCTRL_VBUSVALID_TRSH(0x1));
+		
+		/* set vbusdroop to 4.3v */
+		HW_POWER_5VCTRL_CLR(BM_POWER_5VCTRL_VBUSDROOP_TRSH);
+		HW_POWER_5VCTRL_SET(BF_POWER_5VCTRL_VBUSDROOP_TRSH(0x0));
 
 		// Restore the 5V brownout setting.
 		hw_power_ClearVbusValidInterrupt();

@@ -1309,12 +1309,14 @@ int _start(int arg)
 	//boot rom wrong use debug uart port.
 	//If fuse burned, the below two line can be removed.
 	HW_PINCTRL_MUXSEL7_CLR(0xF);
-	HW_PINCTRL_MUXSEL7_SET(0xA);
-
+	//HW_PINCTRL_MUXSEL7_SET(0xA);
+	HW_PINCTRL_MUXSEL7_CLR(0xF0000);
+	HW_PINCTRL_MUXSEL7_SET(0xA0000);
+	
 	/* Boot ROM set BANK3_PIN24 as debug uart rx.
 	 * which cause uboot can't input
 	*/
-	HW_PINCTRL_MUXSEL7_SET(0x30000);
+	//HW_PINCTRL_MUXSEL7_SET(0x30000);
 
 #ifdef MEM_MDDR
 	/* set to mddr mode*/
@@ -1323,9 +1325,9 @@ int _start(int arg)
 	/* set to ddr2 mode*/
 	HW_PINCTRL_EMI_DS_CTRL_SET(BW_PINCTRL_EMI_DS_CTRL_DDR_MODE(0x3));
 #endif
-	printf(__DATE__ __TIME__);
-	printf("\r\n");
-	/*printf("Fuse 0x%x\r\n",HW_OCOTP_CUSTCAP_RD());*/
+	printf("\r\n" __DATE__ " " __TIME__ "\r\n");
+	printf("FUSE 0x%x\r\n",HW_OCOTP_CUSTCAP_RD());
+	printf("PINCTRL_DIN1 0x%x\r\n",HW_PINCTRL_DIN1_RD());
 
 	poweron_pll();
 	delay(11000);
@@ -1396,6 +1398,19 @@ int _start(int arg)
 		pTest++;
 	}
 	printf("finish simple test\r\n");
+	
+	value = HW_POWER_5VCTRL_RD();
+	printf("HW_POWER_5VCTRL=0x%X\r\n",value);
+	
+	value = HW_POWER_VDDDCTRL_RD();
+	printf("HW_POWER_VDDDCTRL=0x%X\r\n",value);
+	
+	value = HW_POWER_DCDC4P2_RD();
+	printf("HW_POWER_DCDC4P2=0x%X\r\n",value);
+
+	value = HW_POWER_RESET_RD();
+	printf("HW_POWER_RESET_RD=0x%X\r\n",value);
+
 	return 0;
 }
 

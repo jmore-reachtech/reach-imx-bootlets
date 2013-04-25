@@ -8,6 +8,8 @@ BOARDDIR	= $(SRCDIR)/board
 COREDIR		= $(SRCDIR)/core
 CMDLINESDIR	= $(SRCDIR)/cmdlines
 
+CFLAGS_EXTRA = -I$(CURRENTDIR)/../mach-$(ARCH)/includes
+
 # Linker script
 BASE_ADDR	?= 0x00002000
 BOOT_LAYOUT_IN	= $(SRCDIR)/linux_prep.ld.in
@@ -31,7 +33,7 @@ OBJCOPY	= $(CROSS_COMPILE)objcopy
 OBJDUMP	= $(CROSS_COMPILE)objdump
 
 LIBGCCDIR = $(dir $(shell $(CC) -print-libgcc-file-name))
-CFLAGS 	= -Wall -I$(INCLUDEDIR) -nostdinc -fno-builtin -O
+CFLAGS 	= -Wall -I$(INCLUDEDIR) $(CFLAGS_EXTRA) -nostdinc -fno-builtin -O
 LDFLAGS = -static -nostdlib -T $(BOOT_LAYOUT_OUT) -L$(LIBGCCDIR) -lgcc
 
 BOARD ?= stmp378x_dev
