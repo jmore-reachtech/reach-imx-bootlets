@@ -1,7 +1,6 @@
 // STMP378x ROM command script to load and run Linux kernel
 options {
 	driveTag = 0x00;
-	flags = 0x01;
 }
 sources {
 	power_prep="./power_prep/power_prep";
