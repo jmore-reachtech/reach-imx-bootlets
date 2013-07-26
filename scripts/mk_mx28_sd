@@ -290,7 +290,7 @@ if [[ $no_bootstream -ne 1 ]]; then
     fi
 
     #FIXME: make canby a var
-    sb_name="canby_${ivt}${app_name}.sb"
+    sb_name="imx28_${ivt}${app_name}.sb"
 
     $DEBUG make_nominal_partition $p0
     $DEBUG install_boot_stream ${BASE_DIR}/${sb_name} $p0 2
