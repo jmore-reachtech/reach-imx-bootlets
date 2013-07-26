@@ -1410,6 +1410,9 @@ int _start(int arg)
 
 	value = HW_POWER_RESET_RD();
 	printf("HW_POWER_RESET_RD=0x%X\r\n",value);
+	
+	value = HW_PINCTRL_MUXSEL7_RD();
+	printf("HW_PINCTRL_MUXSEL7_RD=0x%X\r\n",value);
 
 	return 0;
 }

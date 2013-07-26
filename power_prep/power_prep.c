@@ -293,6 +293,18 @@ int _start( void )
 
 	hw_power_SetPowerClkGate( false );
 
+	//boot rom wrong use debug uart port.
+	//If fuse burned, the below two line can be removed.
+	HW_PINCTRL_MUXSEL7_CLR(0xF);
+	//HW_PINCTRL_MUXSEL7_SET(0xA);
+	HW_PINCTRL_MUXSEL7_CLR(0xF0000);
+	HW_PINCTRL_MUXSEL7_SET(0xA0000);
+	
+	/* Boot ROM set BANK3_PIN24 as debug uart rx.
+	 * which cause uboot can't input
+	*/
+	//HW_PINCTRL_MUXSEL7_SET(0x30000);
+		
 	printf("\r\nPowerPrep start initialize power...\r\n");
 	HW_POWER_VDDDCTRL.B.LINREG_OFFSET = HW_POWER_LINREG_OFFSET_STEP_BELOW;
 	HW_POWER_VDDACTRL.B.LINREG_OFFSET = HW_POWER_LINREG_OFFSET_STEP_BELOW;
